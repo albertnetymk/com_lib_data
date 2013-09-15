@@ -10,4 +10,5 @@ in a row, which takes about 30 mins. `manual` means we reload all the data on ea
 
 ## Table
 `test.sh` is the driver for iterating all the different folders, and create tables. `table_2.pl`, `table_3.pl` and `test.pl` are called by the driver
-to finish the task.
+to finish the task. In every folder, there's one file called `table.md`, which contains the mean and standard deviation of all the data in that
+folder.
