@@ -18,7 +18,8 @@ for d in *; do
         # tail -n $half unzip.txt > std.txt
         if [[ $(( $(cat mean.txt | wc -l)/3 )) -eq 2 ]]; then
             # echo '| |100|200|'
-            echo '| |100|200|' > table.md
+            echo '## mean' > table.md
+            echo '| |100|200|' >> table.md
             echo '|---|---|---|' >> table.md
             perl ../table_2.pl mean.txt >> table.md
             echo '## standard deviation' >> table.md
@@ -27,7 +28,8 @@ for d in *; do
             perl ../table_2.pl std.txt >> table.md
         else
             # echo '| |10|100|200|'
-            echo '| |10|100|200|' > table.md
+            echo '## mean' > table.md
+            echo '| |10|100|200|' >> table.md
             echo '|---|---|---|---|' >> table.md
             perl ../table_3.pl mean.txt >> table.md
             echo '## standard deviation' >> table.md
