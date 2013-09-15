@@ -21,12 +21,18 @@ for d in *; do
             echo '| |100|200|' > table.md
             echo '|---|---|---|' >> table.md
             perl ../table_2.pl mean.txt >> table.md
+            echo '## standard deviation' >> table.md
+            echo '| |100|200|' >> table.md
+            echo '|---|---|---|' >> table.md
             perl ../table_2.pl std.txt >> table.md
         else
             # echo '| |10|100|200|'
             echo '| |10|100|200|' > table.md
             echo '|---|---|---|---|' >> table.md
             perl ../table_3.pl mean.txt >> table.md
+            echo '## standard deviation' >> table.md
+            echo '| |10|100|200|' >> table.md
+            echo '|---|---|---|---|' >> table.md
             perl ../table_3.pl std.txt >> table.md
         fi
 
