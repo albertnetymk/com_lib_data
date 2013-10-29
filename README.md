@@ -4,18 +4,40 @@
 `identity.txt` contains the data for reading and writing to shared memory. The actor doesn't nothing but read 64000 integers and write them directly
 to shared memory.
 
-## 2DIDCT
-`snake` branch contains the data for snake layout. `auto` means we load all the input data into shared memory once, and run the application 10 times
-in a row, which takes about 30 mins. `manual` means we reload all the data on each run, which takes about 180 mins for 10 iterations.
+## Cost
 
-In each branch, there are four folder which are of interest:
+### Raw data
 
-* `fair` : same memory footprint is used in all versions.
-* `fair_constrain` : similar to `fair`, but busy polling is conducted on local mirror variables.
-* `plain` : same buffer size is used, but memory footprint is different across various versions, for number of buffers is different.
-* `plain_constrain` : similar to `plain`, but busy polling is conducted on local mirror variables.
+* ;                              // empty loop ~ 12
 
-## Table
-`test.sh` is the driver for iterating all the different folders, and during the process, `table_2.pl`, `table_3.pl` and `test.pl` are called by the
-driver to create execution cycles and its deviation. In every folder, there's one file called `table.md`, which contains the mean and standard
-deviation of all the data in that folder.
+* x = 1;                         // local_write ~ 16
+
+* x = i;                         // local_read + local_write ~ 17
+
+* x = *x_local_ptr;              // local_read + local_read + local_write ~ 20
+
+* x = *x_remote_ptr;             // local_read + remote_read + local_write ~ 36
+
+* *x_remote_ptr = 1;             // local_read + remote_write ~ 17
+
+* *x_remote_ptr = i;             // local_read + local_read + remote_write ~ 18
+
+* *x_remote_ptr = *x_local_ptr;  // local_read + local_read + local_read + remote_write ~ 20
+
+* *x_remote_ptr = *x_remote_ptr; // local_read + local_read + remote_read + remote_write ~ 36
+
+* start_timer();                 // 27
+
+* stop_timer();                  // 27
+
+* start_timer(); stop_timer();   // 42
+
+### Conclusion
+
+* local_read = local_write = remote_write = 4
+
+* remote_read = 20
+
+* start_timer = 15
+
+* stop_timer = 15
