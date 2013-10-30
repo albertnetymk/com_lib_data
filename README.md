@@ -34,11 +34,11 @@ to shared memory.
 
 * *x_remote_ptr = *x_remote_ptr; // local_read + local_read + remote_read (core0 -- core1) + remote_write ~ 36
 
-* start_timer();                 // 27
+* start_timer();                 // 91
 
-* stop_timer();                  // 27
+* stop_timer();                  // 60
 
-* start_timer(); stop_timer();   // 42
+* start_timer(); stop_timer();   // 139
 
 ### Conclusion
 
@@ -48,6 +48,6 @@ to shared memory.
 
 * remote_read = 20 + 3 * hops
 
-* start_timer = 15
+* start_timer = 79
 
-* stop_timer = 15
+* stop_timer = 48
